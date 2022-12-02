@@ -1,0 +1,1 @@
+enum ProductServiceEndPoints { PRODUCTS }
