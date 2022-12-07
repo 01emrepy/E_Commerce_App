@@ -1,40 +1,57 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'StoreModel.g.dart';
-
+part 'home_model.g.dart';
 
 @JsonSerializable()
-class Store {
+class HomeModel {
   int? id;
   String? title;
   double? price;
   String? description;
   String? category;
   String? image;
-  Rating? rating;
+  @JsonKey(ignore: true)
+  double count = 0;
+  @JsonKey(ignore:  true)
+  double productPrice = 1;
+  @JsonKey(ignore: true)
+  bool isOpen = false;
 
-  Store(
-      {this.id,
-      this.title,
-      this.price,
-      this.description,
-      this.category,
-      this.image,
-      this.rating});
+  HomeModel({
+    this.id,
+    this.title,
+    this.price,
+    this.description,
+    this.category,
+    this.image,
+  });
 
-  Factory Store.fromJson(Map<String, dynamic> map) => _$StorefromJson(map);
+  factory HomeModel.fromJson(Map<String, dynamic> json) =>
+      _$HomeModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$StoreToJson(this);
-}
+  Map<String, dynamic> toJson() => _$HomeModelToJson(this);
 
-class Rating {
-  double? rate;
-  int? count;
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
 
-  Rating({this.rate, this.count});
+    return other is HomeModel &&
+        other.title == title &&
+        other.id == id &&
+        other.description == description &&
+        other.category == category &&
+        other.price == price &&
+        other.image == image;
+  }
 
-  Factory Rating.fromJson(Map<String, dynamic> json) => _$RatingfromJson(map);
-
-  Map<String, dynamic> toJson() => _$RatingToJson(this);
+  @override
+  int get hashCode {
+    return title.hashCode ^
+        id.hashCode ^
+        description.hashCode ^
+        category.hashCode ^
+        image.hashCode ^
+        price.hashCode;
+  }
 }
